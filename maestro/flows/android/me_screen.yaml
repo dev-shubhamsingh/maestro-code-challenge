@@ -1,0 +1,67 @@
+appId: ${APP_ID}
+name: Android Me Screen Empty State
+tags:
+  - android
+  - me
+  - smoke
+jsEngine: graaljs
+env:
+  APP_ID: "dk.trackman.golfapp.qa.debug"
+  SIGN_IN_ENTRYPOINT: "Sign In"
+  EMAIL_FIELD: "Email"
+  PASSWORD_FIELD: "Password"
+  SUBMIT_SIGN_IN: "SIGN IN"
+  ME_TAB: "Me"
+  ACTIVITIES_SECTION_TITLE: "Activities"
+  ACTIVITIES_EMPTY_STATE: "None"
+  MY_BAG_SECTION_TITLE: "Bag"
+  MY_BAG_ADD_CLUBS: "Add clubs"
+  OFF_THE_TEE_SECTION_TITLE: "Off the tee"
+  OFF_THE_TEE_LABEL_1: "Driving"
+  OFF_THE_TEE_LABEL_2: "Average"
+  OFF_THE_TEE_LABEL_3: "Longest"
+---
+- runScript: ../../scripts/bootstrap.js
+- launchApp:
+    clearState: true
+- runFlow:
+    file: ../subflows/sign_in.yaml
+    label: Sign in with the manually created Android account
+    env:
+      SIGN_IN_ENTRYPOINT: ${SIGN_IN_ENTRYPOINT}
+      EMAIL_FIELD: ${EMAIL_FIELD}
+      PASSWORD_FIELD: ${PASSWORD_FIELD}
+      SUBMIT_SIGN_IN: ${SUBMIT_SIGN_IN}
+      APP_ID: ${APP_ID}
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+- runFlow:
+    file: ../subflows/navigate_to_me.yaml
+    label: Open the Me screen
+    env:
+      APP_ID: ${APP_ID}
+      ME_TAB: ${ME_TAB}
+- assertVisible: ${ACTIVITIES_SECTION_TITLE}
+- assertVisible:
+    id: ActivityCount
+    text: ${ACTIVITIES_EMPTY_STATE}
+- assertVisible: ${MY_BAG_SECTION_TITLE}
+- assertVisible:
+    id: BagState
+    text: ${MY_BAG_ADD_CLUBS}
+- scrollUntilVisible:
+    element:
+      text: ${OFF_THE_TEE_SECTION_TITLE}
+    direction: DOWN
+    timeout: 20000
+    centerElement: true
+- runFlow:
+    file: ../subflows/assert_off_the_tee_empty.yaml
+    label: Confirm Off the tee values are empty
+    env:
+      APP_ID: ${APP_ID}
+      OFF_THE_TEE_SECTION_TITLE: ${OFF_THE_TEE_SECTION_TITLE}
+      OFF_THE_TEE_LABEL_1: ${OFF_THE_TEE_LABEL_1}
+      OFF_THE_TEE_LABEL_2: ${OFF_THE_TEE_LABEL_2}
+      OFF_THE_TEE_LABEL_3: ${OFF_THE_TEE_LABEL_3}
+- takeScreenshot: me-screen-empty-state

@@ -1,0 +1,18 @@
+appId: ${APP_ID}
+---
+- assertVisible: ${OFF_THE_TEE_SECTION_TITLE}
+- assertVisible: ${OFF_THE_TEE_LABEL_1}
+- assertVisible: ${OFF_THE_TEE_LABEL_2}
+- assertVisible: ${OFF_THE_TEE_LABEL_3}
+- copyTextFrom:
+    text: "-"
+    below: ${OFF_THE_TEE_LABEL_2}
+    leftOf: ${OFF_THE_TEE_LABEL_3}
+- evalScript: ${output.offTheTeeAverage = maestro.copiedText}
+- assertTrue: ${output.offTheTeeAverage == "-"}
+- copyTextFrom:
+    text: "-"
+    below: ${OFF_THE_TEE_LABEL_3}
+    rightOf: ${OFF_THE_TEE_LABEL_2}
+- evalScript: ${output.offTheTeeLongest = maestro.copiedText}
+- assertTrue: ${output.offTheTeeLongest == "-"}

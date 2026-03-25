@@ -1,0 +1,20 @@
+appId: ${APP_ID}
+---
+- assertVisible: ${SIGN_IN_ENTRYPOINT}
+- tapOn: ${SIGN_IN_ENTRYPOINT}
+- assertVisible:
+    id: ${EMAIL_FIELD}
+- tapOn:
+    id: ${EMAIL_FIELD}
+- setClipboard: ${EMAIL}
+- pasteText
+- assertVisible:
+    id: ${PASSWORD_FIELD}
+- tapOn:
+    id: ${PASSWORD_FIELD}
+- setClipboard: ${PASSWORD}
+- pasteText
+- hideKeyboard
+- tapOn:
+    text: ${SUBMIT_SIGN_IN}
+    enabled: true

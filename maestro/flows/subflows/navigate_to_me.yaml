@@ -1,0 +1,6 @@
+appId: ${APP_ID}
+---
+- assertVisible: ${ME_TAB}
+- tapOn: ${ME_TAB}
+- assertVisible: ${ME_TAB}
+

@@ -1,0 +1,13 @@
+.DS_Store
+*.log
+artifacts/
+debug-output/
+apk/
+.env
+.idea/
+.android/
+.android-home/
+.android-avd/
+.maestro-home/
+after-sign-in.png
+me-screen-empty-state.png
